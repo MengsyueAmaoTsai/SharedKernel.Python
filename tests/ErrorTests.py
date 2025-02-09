@@ -72,3 +72,27 @@ class ErrorTests:
         assert error.type == ErrorType.Null
         assert error.code == "Null"
         assert error.message == ""
+
+    def test_errors_with_same_properties_should_be_equal(self):
+        error1 = Error.invalid("Error.Code", "Error message")
+        error2 = Error.invalid("Error.Code", "Error message")
+
+        assert error1 == error2
+
+    def test_errors_with_different_type_should_not_be_equal(self):
+        error1 = Error.invalid("Error.Code", "Error message")
+        error2 = Error.unauthorized("Error.Code", "Error message")
+
+        assert error1 != error2
+
+    def test_errors_with_different_code_should_not_be_equal(self):
+        error1 = Error.invalid("Error.Code", "Error message")
+        error2 = Error.invalid("Error.Code2", "Error message")
+
+        assert error1 != error2
+
+    def test_errors_with_different_message_should_not_be_equal(self):
+        error1 = Error.invalid("Error.Code", "Error message")
+        error2 = Error.invalid("Error.Code", "Error message2")
+
+        assert error1 != error2
