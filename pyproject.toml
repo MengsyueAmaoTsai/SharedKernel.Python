@@ -1,0 +1,29 @@
+[project]
+name = "richillcapital-shared-kernel"
+version = "1.0.0"
+description = "Add your description here"
+authors = [
+    { name = "Mengsyue Amao Tsai", email = "mengsyue.tsai@outlook.com" }
+]
+dependencies = [
+    "pytest>=8.3.4",
+]
+readme = "README.md"
+requires-python = ">= 3.12"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = []
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[tool.rye.scripts]
+test = "pytest"

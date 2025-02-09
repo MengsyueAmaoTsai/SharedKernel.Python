@@ -1,1 +1,3 @@
-# RichillCapital.SharedKernel.Python
+# sharedkernel-python
+
+Describe your project here.
