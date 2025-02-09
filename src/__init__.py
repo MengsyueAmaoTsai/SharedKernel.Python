@@ -27,6 +27,3 @@ class Error:
         if type == ErrorType.Null:
             raise ValueError("Error type cannot be Null.")
         return Error(type, code, message)
-
-
-# Error.Null = Error(ErrorType.Null, "", "")

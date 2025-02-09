@@ -1,0 +1,35 @@
+trigger:
+  branches:
+    include:
+      - develop
+      - feature/**
+      - release/**
+      - master
+      - hotfix/**
+
+pool:
+  name: Default # Use self-host agent pool named 'Default'
+
+resources:
+  - repo: self
+
+variables:
+  solution: ./RichillCapital.Identity.Web.sln
+  project: ./src/RichillCapital.Identity.Web/RichillCapital.Identity.Web.csproj
+
+stages:
+  - stage: BuildStage
+    displayName: Build
+    jobs:
+      - job: BuildJob
+        displayName: Build
+
+        steps:
+          - script: dotnet restore $(solution)
+            displayName: Restore
+
+          - script: rye run build
+            displayName: Build
+
+          - script: rye test
+            displayName: Test

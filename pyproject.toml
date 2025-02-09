@@ -26,4 +26,5 @@ allow-direct-references = true
 packages = ["src"]
 
 [tool.rye.scripts]
+build = "rye build --sdist --wheel -a -o ./artifacts --clean -v"
 test = "pytest"
