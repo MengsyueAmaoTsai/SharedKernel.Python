@@ -13,7 +13,7 @@ def test_create_when_given_error_type_null_should_throw_value_error():
     [
         ErrorType.Validation,
         ErrorType.Unauthorized,
-        ErrorType.Forbidden,
+        ErrorType.AccessDenied,
         ErrorType.NotFound,
         ErrorType.MethodNotAllowed,
         ErrorType.Conflict,

@@ -6,7 +6,7 @@ class ErrorType(Enum):
     Null = "Null"
     Validation = "Validation"
     Unauthorized = "Unauthorized"
-    Forbidden = "Forbidden"
+    AccessDenied = "AccessDenied"
     NotFound = "NotFound"
     MethodNotAllowed = "MethodNotAllowed"
     Conflict = "Conflict"
@@ -26,4 +26,8 @@ class Error:
     def create(type: ErrorType, code: str, message: str) -> "Error":
         if type == ErrorType.Null:
             raise ValueError("Error type cannot be Null.")
+
+        if not code:
+            raise ValueError("Error code cannot be null or empty.")
+
         return Error(type, code, message)
