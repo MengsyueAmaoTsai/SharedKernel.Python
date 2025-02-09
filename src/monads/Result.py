@@ -29,3 +29,15 @@ class Result:
         if error is Error.Null:
             raise ValueError("Error cannot be Error.Null")
         return Result(False, error)
+
+    def __eq__(self, other):
+        if not isinstance(other, Result):
+            return False
+
+        if self.isFailure and other.isFailure:
+            return self.error == other.error
+
+        if self.isSuccess and other.isFailure or self.isFailure and other.isSuccess:
+            return False
+
+        return True

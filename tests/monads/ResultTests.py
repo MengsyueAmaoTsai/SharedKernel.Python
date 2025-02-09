@@ -26,3 +26,19 @@ class ResultTests:
         assert result.isSuccess is False
         assert result.isFailure is True
         assert result.error == error
+
+    def test_success_results_should_be_equal(self) -> None:
+        assert Result.success() == Result.success()
+
+    def test_failure_results_with_same_error_should_be_equal(self) -> None:
+        error = Error.invalid("invalid operation")
+        assert Result.failure(error) == Result.failure(error)
+
+    def test_failure_results_with_different_errors_should_not_be_equal(self) -> None:
+        error1 = Error.invalid("invalid operation")
+        error2 = Error.invalid("invalid operation2")
+
+        assert Result.failure(error1) != Result.failure(error2)
+
+    def test_success_result_should_not_equal_to_failure_result(self) -> None:
+        assert Result.success() != Result.failure(Error.invalid("invalid operation"))
