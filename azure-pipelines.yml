@@ -29,3 +29,44 @@ stages:
 
           - script: rye test
             displayName: Test
+
+      - job: PublishJob
+        displayName: Publish
+        dependsOn: BuildJob
+        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+
+        steps:
+          - task: PowerShell@2
+            displayName: Generate build version
+            inputs:
+              targetType: inline
+              script: |
+                Write-Host "Generating build version..."
+
+                $buildVersion = (Get-Date).ToString("yy.MMdd") + ".$(Build.BuildId)"
+                Write-Host "##vso[task.setvariable variable=BuildVersion]$buildVersion"
+
+                Write-Host "Generated Build Version: $buildVersion"
+
+          - task: PowerShell@2
+            displayName: Update pyproject.toml version
+            inputs:
+              targetType: inline
+              script: |
+                Write-Host "Updating assembly version to $(BuildVersion)"
+
+                $pyproject = Get-Content -Path "pyproject.toml"
+                $pyproject = $pyproject -replace 'version = ".*"', "version = ""$(BuildVersion)"""
+                $pyproject | Set-Content -Path "pyproject.toml"
+
+                Write-Host "Updated assembly version to $(BuildVersion)"
+
+          - script: rye run build
+            displayName: Publish build artifacts
+
+          - task: PublishPipelineArtifact@1
+            displayName: Publish pipeline artifact
+            inputs:
+              targetPath: '$(Build.ArtifactStagingDirectory)/artifacts'
+              artifact: 'RichillCapital.SharedKernel-Debug-$(BuildVersion)'
+              publishLocation: 'pipeline'
