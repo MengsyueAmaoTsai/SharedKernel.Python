@@ -3,7 +3,7 @@ import pytest
 from src import Error, ErrorType
 
 
-def test_create_when_given_error_type_none_should_throw_value_error():
+def test_create_when_given_error_type_null_should_throw_value_error():
     with pytest.raises(ValueError, match="Error type cannot be Null."):
         Error.create(ErrorType.Null, "errorCode", "errorMessage")
 
@@ -22,7 +22,7 @@ def test_create_when_given_error_type_none_should_throw_value_error():
         ErrorType.Unavailable,
     ],
 )
-def test_create_should_create_error(error_type):
+def test_create_should_create_error(error_type: ErrorType):
     error_code = "Error.Code"
     error_message = "Error message"
 

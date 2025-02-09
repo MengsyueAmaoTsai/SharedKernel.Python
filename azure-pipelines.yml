@@ -13,10 +13,6 @@ pool:
 resources:
   - repo: self
 
-variables:
-  solution: ./RichillCapital.Identity.Web.sln
-  project: ./src/RichillCapital.Identity.Web/RichillCapital.Identity.Web.csproj
-
 stages:
   - stage: BuildStage
     displayName: Build
@@ -25,8 +21,8 @@ stages:
         displayName: Build
 
         steps:
-          - script: dotnet restore $(solution)
-            displayName: Restore
+          - script: rye sync
+            displayName: Sync dependencies
 
           - script: rye run build
             displayName: Build
