@@ -61,7 +61,7 @@ stages:
 
                 Write-Host "Updated assembly version to $(BuildVersion)"
 
-          - script: rye run build
+          - script: rye run build -o $(Build.ArtifactStagingDirectory)/artifacts 
             displayName: Publish build artifacts
 
           - task: PublishPipelineArtifact@1
