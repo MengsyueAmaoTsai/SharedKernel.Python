@@ -30,6 +30,8 @@ class Error:
     code: str
     message: str
 
+    Null: "Error" = None
+
     @staticmethod
     def create(type: ErrorType, code: str, message: str) -> "Error":
         """
