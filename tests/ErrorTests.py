@@ -5,11 +5,11 @@ from src import Error, ErrorType
 
 class ErrorTests:
     def test_create_when_given_error_type_null_should_raise_error(self):
-        with pytest.raises(ValueError, match="Error type cannot be Null."):
+        with pytest.raises(ValueError, match=r"Error type cannot be Null."):
             Error.create(ErrorType.Null, "errorCode", "errorMessage")
 
     def test_create_when_given_error_code_is_empty_should_raise_error(self):
-        with pytest.raises(ValueError, match="Error code cannot be null or empty."):
+        with pytest.raises(ValueError, match=r"Error code cannot be null or empty."):
             Error.create(ErrorType.Validation, "", "errorMessage")
 
     @pytest.mark.parametrize(

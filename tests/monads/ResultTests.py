@@ -11,12 +11,12 @@ class ResultTests:
         assert result.is_success is True
         assert result.is_failure is False
         with pytest.raises(
-            RuntimeError, match="Can not access error on a successful result."
+            RuntimeError, match=r"Can not access error on a successful result."
         ):
             result.error
 
     def test_failure_when_given_null_error_should_raise_value_error(self) -> None:
-        with pytest.raises(ValueError, match="Error cannot be Error.Null"):
+        with pytest.raises(ValueError, match=r"Error cannot be Error.Null"):
             Result.failure(Error.Null)
 
     def test_failure_should_create_failure_result(self) -> None:
