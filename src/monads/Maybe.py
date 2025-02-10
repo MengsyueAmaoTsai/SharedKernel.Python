@@ -3,8 +3,8 @@ class Maybe[TValue]:
     Represents a container that may or may not hold a value of type TValue.
     """
 
-    def __init__(self, hasValue: bool, value: TValue | None) -> None:
-        self.__has_value = hasValue
+    def __init__(self, has_value: bool, value: TValue | None) -> None:
+        self.__has_value = has_value
         self.__value = value
 
     @property

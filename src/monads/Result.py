@@ -2,21 +2,21 @@ from .. import Error
 
 
 class Result:
-    def __init__(self, isSuccess: bool, error: Error) -> None:
-        self.__isSuccess = isSuccess
+    def __init__(self, is_success: bool, error: Error) -> None:
+        self.__is_success = is_success
         self.__error = error
 
     @property
-    def isSuccess(self) -> bool:
-        return self.__isSuccess
+    def is_success(self) -> bool:
+        return self.__is_success
 
     @property
-    def isFailure(self) -> bool:
-        return not self.__isSuccess
+    def is_failure(self) -> bool:
+        return not self.__is_success
 
     @property
     def error(self) -> Error:
-        if self.__isSuccess:
+        if self.__is_success:
             raise RuntimeError("Can not access error on a successful result.")
         return self.__error
 
@@ -34,10 +34,10 @@ class Result:
         if not isinstance(other, Result):
             return False
 
-        if self.isFailure and other.isFailure:
+        if self.is_failure and other.is_failure:
             return self.error == other.error
 
-        if self.isSuccess and other.isFailure or self.isFailure and other.isSuccess:
+        if self.is_success and other.is_failure or self.is_failure and other.is_success:
             return False
 
         return True

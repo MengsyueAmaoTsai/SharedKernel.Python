@@ -8,8 +8,8 @@ class ResultTests:
     def test_success_should_create_success_result(self) -> None:
         result = Result.success()
 
-        assert result.isSuccess is True
-        assert result.isFailure is False
+        assert result.is_success is True
+        assert result.is_failure is False
         with pytest.raises(
             RuntimeError, match="Can not access error on a successful result."
         ):
@@ -23,8 +23,8 @@ class ResultTests:
         error = Error.invalid("invalid operation")
         result = Result.failure(error)
 
-        assert result.isSuccess is False
-        assert result.isFailure is True
+        assert result.is_success is False
+        assert result.is_failure is True
         assert result.error == error
 
     def test_success_results_should_be_equal(self) -> None:
