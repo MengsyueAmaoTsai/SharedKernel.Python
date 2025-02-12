@@ -18,3 +18,4 @@ pluggy==1.5.0
     # via pytest
 pytest==8.3.4
     # via richillcapital-shared-kernel
+ruff==0.9.6

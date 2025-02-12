@@ -17,7 +17,9 @@ build-backend = "hatchling.build"
 
 [tool.rye]
 managed = true
-dev-dependencies = []
+dev-dependencies = [
+    "ruff>=0.9.6",
+]
 
 [tool.hatch.metadata]
 allow-direct-references = true
@@ -28,3 +30,4 @@ packages = ["src"]
 [tool.rye.scripts]
 build = "rye build --sdist --wheel -a --clean -v"
 test = "pytest"
+lint = "ruff check"

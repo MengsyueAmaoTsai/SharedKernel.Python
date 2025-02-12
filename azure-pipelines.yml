@@ -23,6 +23,9 @@ stages:
         steps:
           - script: rye sync
             displayName: Sync dependencies
+          
+          - script: rye run lint
+            displayName: Lint
 
           - script: rye run build
             displayName: Build
