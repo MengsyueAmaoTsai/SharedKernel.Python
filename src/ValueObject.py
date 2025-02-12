@@ -26,3 +26,9 @@ class SingleValueObject[TValue](ValueObject):
     @property
     def value(self) -> TValue:
         return self.__value
+
+    def __str__(self) -> str:
+        return str(self.__value)
+
+    def _get_atomic_values(self) -> Iterable[object]:
+        return [self.value]
