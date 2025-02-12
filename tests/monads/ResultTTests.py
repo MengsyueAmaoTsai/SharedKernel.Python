@@ -21,7 +21,7 @@ class ResultTTests:
         assert result.error == error
 
     def test_failure_given_null_error_should_raise_value_error(self) -> None:
-        with pytest.raises(ValueError, match=r"Error cannot be Error.Null"):
+        with pytest.raises(ValueError, match="Error cannot be Error.Null"):
             ResultT.failure(Error.Null)
 
     def test_results_with_same_value_should_be_equal(self) -> None:
