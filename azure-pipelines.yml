@@ -198,7 +198,7 @@ stages:
                 git tag -a "v$(ReleaseVersion)" -m "Release version $(ReleaseVersion)"
                 git push origin "v$(ReleaseVersion)"
 
-          - script: rye publish --yes --skip-existing 
+          - script: rye publish --yes --skip-existing --token $(PYPI_API_TOKEN)
             displayName: Publish to PyPI
 
 
