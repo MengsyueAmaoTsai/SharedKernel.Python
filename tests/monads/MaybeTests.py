@@ -9,7 +9,7 @@ class MaybeTests:
 
         assert not maybe.has_value
         assert maybe.is_null is True
-        with pytest.raises(RuntimeError, match="Can not access value on a null Maybe"):
+        with pytest.raises(RuntimeError, match=r"Can not access value on a null Maybe"):
             maybe.value
 
     def test_with_value_given_value_should_return_maybe_with_value(self) -> None:
@@ -24,7 +24,7 @@ class MaybeTests:
 
         assert not maybe.has_value
         assert maybe.is_null is True
-        with pytest.raises(RuntimeError, match="Can not access value on a null Maybe"):
+        with pytest.raises(RuntimeError, match=r"Can not access value on a null Maybe"):
             maybe.value
 
     def test_maybes_with_same_value_should_be_equal(self) -> None:

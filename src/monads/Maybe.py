@@ -40,6 +40,7 @@ class Maybe[TValue]:
         """
         if self.is_null:
             raise RuntimeError("Can not access value on a null Maybe")
+
         return self.__value
 
     @staticmethod
@@ -52,6 +53,7 @@ class Maybe[TValue]:
         """
         return Maybe(False, None)
 
+    @staticmethod
     def with_value(value: TValue) -> "Maybe[TValue]":
         """
         Creates a new Maybe instance with the specified value.
