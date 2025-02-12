@@ -1,7 +1,7 @@
 [project]
 name = "richillcapital-shared-kernel"
 version = "1.0.0"
-description = "Add your description here"
+description = "Shared kernel for python projects"
 authors = [
     { name = "Mengsyue Amao Tsai", email = "mengsyue.tsai@outlook.com" }
 ]
