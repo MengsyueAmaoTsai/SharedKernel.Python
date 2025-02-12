@@ -3,6 +3,10 @@ from typing import Iterable
 
 
 class ValueObject(metaclass=ABCMeta):
+    """
+    Base class for value objects.
+    """
+
     @abstractmethod
     def _get_atomic_values(self) -> Iterable[object]: ...
 
@@ -20,11 +24,21 @@ class ValueObject(metaclass=ABCMeta):
 
 
 class SingleValueObject[TValue](ValueObject):
+    """
+    Represents a single value object.
+    """
+
     def __init__(self, value: TValue):
         self.__value = value
 
     @property
     def value(self) -> TValue:
+        """
+        Returns the value of the ValueObject.
+
+        Returns:
+            TValue: The value of the ValueObject.
+        """
         return self.__value
 
     def __str__(self) -> str:
