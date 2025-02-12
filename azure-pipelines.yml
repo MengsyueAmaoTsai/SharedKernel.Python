@@ -73,3 +73,47 @@ stages:
               targetPath: '$(Build.ArtifactStagingDirectory)/artifacts'
               artifact: 'RichillCapital.SharedKernel-Debug-$(BuildVersion)'
               publishLocation: 'pipeline'
+
+  - stage: ReleaseStage
+    displayName: Release
+    dependsOn: BuildStage
+    condition: startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')
+
+    jobs:
+      - job: ReleaseJob
+        displayName: Build release artifacts
+        steps:
+          - task: PowerShell@2
+            displayName: Generate release version
+            inputs:
+              targetType: inline
+              script: |
+                Write-Host "Generating release version from branch: $(Build.SourceBranch)"
+
+                $branchName = "$(Build.SourceBranchName)"
+                Write-Host "##vso[task.setvariable variable=ReleaseVersion]$branchName"
+
+                Write-Host "Generated Release Version: $branchName"
+
+          - task: PowerShell@2
+            displayName: Update pyproject.toml version
+            inputs:
+              targetType: inline
+              script: |
+                Write-Host "Updating version to $(ReleaseVersion)"
+
+                $pyproject = Get-Content -Path "pyproject.toml"
+                $pyproject = $pyproject -replace 'version = ".*"', "version = ""$(ReleaseVersion)"""
+                $pyproject | Set-Content -Path "pyproject.toml"
+
+                Write-Host "Updated version to $(ReleaseVersion)"
+
+          - script: rye run build -o $(Build.ArtifactStagingDirectory)/artifacts 
+            displayName: Generate Release Build
+
+          - task: PublishPipelineArtifact@1
+            displayName: Publish Release Artifact
+            inputs:
+              targetPath: '$(Build.ArtifactStagingDirectory)/artifacts'
+              artifact: 'RichillCapital.SharedKernel-Release-$(ReleaseVersion)'
+              publishLocation: 'pipeline'
