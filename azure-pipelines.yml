@@ -117,3 +117,88 @@ stages:
               targetPath: '$(Build.ArtifactStagingDirectory)/artifacts'
               artifact: 'RichillCapital.SharedKernel-Release-$(ReleaseVersion)'
               publishLocation: 'pipeline'
+
+  - stage: ProductionStage
+    displayName: Production deployment
+    dependsOn: BuildStage
+    condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+
+    jobs:
+      - job: DeployProductionJob
+        displayName: Publish to PyPI
+        steps:
+          - task: PowerShell@2
+            displayName: Generate release version from latest release branch
+            inputs:
+              targetType: inline
+              script: |
+                git fetch --all
+
+                $branches = git branch -r | Where-Object { $_ -match 'origin/release/\d+\.\d+\.\d+' }
+
+                if (-not $branches) {
+                    Write-Error "No matching branches found."
+                    exit 1
+                }
+
+                $versions = $branches |
+                ForEach-Object {
+                    if ($_ -match 'origin/release/(\d+\.\d+\.\d+)') {
+                        [PSCustomObject]@{
+                            BranchName = $_.Trim()
+                            Version = [System.Version]$matches[1]
+                        }
+                    }
+                }
+
+                $latestBranch = $versions |
+                    Sort-Object -Property Version -Descending |
+                    Select-Object -First 1
+
+                if ($latestBranch) {
+                    Write-Host "##vso[task.setvariable variable=ReleaseVersion]$($latestBranch.Version)"
+                    Write-Host "Generated release version: $($latestBranch.Version)"
+                } else {
+                    Write-Error "Failed to find the latest release branch."
+                    exit 1
+                }
+
+          - task: PowerShell@2
+            displayName: Update pyproject.toml version
+            inputs:
+              targetType: inline
+              script: |
+                Write-Host "Updating version to $(ReleaseVersion)"
+
+                $pyproject = Get-Content -Path "pyproject.toml"
+                $pyproject = $pyproject -replace 'version = ".*"', "version = ""$(ReleaseVersion)"""
+                $pyproject | Set-Content -Path "pyproject.toml"
+
+                Write-Host "Updated version to $(ReleaseVersion)"                
+
+          - script: rye run build -o $(Build.ArtifactStagingDirectory)/artifacts
+            displayName: Generate Production Build
+
+          - task: PowerShell@2
+            displayName: Create and push git tag
+            inputs:
+              targetType: inline
+              script: |
+                git config user.name "Mengsyue Amao Tsai"
+                git config user.email "mengsyue.tsai@outlook.com"
+                git fetch --tags
+
+                $tagName = "v$(ReleaseVersion)"
+                $existingTags = git tag --list
+                if ($existingTags -contains $tagName) {
+                  Write-Host "Tag $tagName already exists."
+                  exit 0
+                }                
+
+                git tag -a "v$(ReleaseVersion)" -m "Release version $(ReleaseVersion)"
+                git push origin "v$(ReleaseVersion)"
+
+          - script: rye publish --yes --skip-existing 
+            displayName: Publish to PyPI
+
+
