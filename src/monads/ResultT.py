@@ -97,7 +97,7 @@ class ResultT[TValue]:
         if error is Error.Null:
             raise ValueError("Error cannot be Error.Null")
 
-        return ResultT(False, error, None)
+        return ResultT(False, error, None)  # type: ignore
 
     def __eq__(self, other: object) -> bool:
         """
@@ -108,6 +108,6 @@ class ResultT[TValue]:
             return False
 
         if self.is_success and other.is_success:
-            return self.value == other.value
+            return self.value == other.value  # type: ignore
 
         return self.is_failure and other.is_failure and self.error == other.error

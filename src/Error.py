@@ -30,7 +30,7 @@ class Error:
     code: str
     message: str
 
-    Null: "Error" = None
+    Null: "Error" = None  # type: ignore
 
     @staticmethod
     def create(type: ErrorType, code: str, message: str) -> "Error":
@@ -84,7 +84,7 @@ class Error:
         """
 
     @classmethod
-    def invalid(cls, code_or_message: str, message: str = "") -> "Error":
+    def invalid(cls, code_or_message: str, message: str = "") -> "Error":  # type: ignore
         if not message:
             return cls.create(
                 ErrorType.Validation, ErrorType.Validation.value, code_or_message
@@ -118,7 +118,7 @@ class Error:
         """
 
     @classmethod
-    def unauthorized(cls, code_or_message: str, message: str = "") -> "Error":
+    def unauthorized(cls, code_or_message: str, message: str = "") -> "Error":  # type: ignore
         if not message:
             return cls.create(
                 ErrorType.Unauthorized, ErrorType.Unauthorized.value, code_or_message
@@ -153,7 +153,7 @@ class Error:
         """
 
     @classmethod
-    def access_denied(cls, code_or_message: str, message: str = "") -> "Error":
+    def access_denied(cls, code_or_message: str, message: str = "") -> "Error":  # type: ignore
         if not message:
             return cls.create(
                 ErrorType.AccessDenied, ErrorType.AccessDenied.value, code_or_message
@@ -188,7 +188,7 @@ class Error:
         """
 
     @classmethod
-    def not_found(cls, code_or_message: str, message: str = "") -> "Error":
+    def not_found(cls, code_or_message: str, message: str = "") -> "Error":  # type: ignore
         if not message:
             return cls.create(
                 ErrorType.NotFound, ErrorType.NotFound.value, code_or_message
@@ -223,7 +223,7 @@ class Error:
         """
 
     @classmethod
-    def method_not_allowed(cls, code_or_message: str, message: str = "") -> "Error":
+    def method_not_allowed(cls, code_or_message: str, message: str = "") -> "Error":  # type: ignore
         if not message:
             return cls.create(
                 ErrorType.MethodNotAllowed,
@@ -260,7 +260,7 @@ class Error:
         """
 
     @classmethod
-    def conflict(cls, code_or_message: str, message: str = "") -> "Error":
+    def conflict(cls, code_or_message: str, message: str = "") -> "Error":  # type: ignore
         if not message:
             return cls.create(
                 ErrorType.Conflict, ErrorType.Conflict.value, code_or_message
@@ -295,7 +295,7 @@ class Error:
         """
 
     @classmethod
-    def unsupported_media_type(cls, code_or_message: str, message: str = "") -> "Error":
+    def unsupported_media_type(cls, code_or_message: str, message: str = "") -> "Error":  # type: ignore
         if not message:
             return cls.create(
                 ErrorType.UnsupportedMediaType,
@@ -332,7 +332,7 @@ class Error:
         """
 
     @classmethod
-    def unexpected(cls, code_or_message: str, message: str = "") -> "Error":
+    def unexpected(cls, code_or_message: str, message: str = "") -> "Error":  # type: ignore
         if not message:
             return cls.create(
                 ErrorType.Unexpected, ErrorType.Unexpected.value, code_or_message
@@ -367,7 +367,7 @@ class Error:
         """
 
     @classmethod
-    def unavailable(cls, code_or_message: str, message: str = "") -> "Error":
+    def unavailable(cls, code_or_message: str, message: str = "") -> "Error":  # type: ignore
         if not message:
             return cls.create(
                 ErrorType.Unavailable, ErrorType.Unavailable.value, code_or_message

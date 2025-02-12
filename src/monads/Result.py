@@ -30,7 +30,7 @@ class Result:
             raise ValueError("Error cannot be Error.Null")
         return Result(False, error)
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, Result):
             return False
 
