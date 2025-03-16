@@ -1,6 +1,6 @@
 import pytest
 
-from src import Error, ErrorType
+from src.shared_kernel import Error, ErrorType
 
 
 class ErrorTests:
@@ -50,9 +50,7 @@ class ErrorTests:
             (Error.unavailable, ErrorType.Unavailable),
         ],
     )
-    def test_factory_methods_should_create_correct_error(
-        self, factory_method, error_type
-    ):
+    def test_factory_methods_should_create_correct_error(self, factory_method, error_type):
         custom_code = "Error.Code"
         error_message = "Error message"
         error1 = factory_method(custom_code, error_message)

@@ -1,7 +1,7 @@
 import pytest
 
-from src import Error
-from src.monads import ErrorOr
+from src.shared_kernel import Error
+from src.shared_kernel.monads import ErrorOr
 
 
 class ErrorOrTests:
@@ -63,6 +63,4 @@ class ErrorOrTests:
     def test_error_ors_with_different_errors_should_not_be_equal(self) -> None:
         error1 = Error.invalid("error")
         error2 = Error.invalid("error2")
-        assert ErrorOr[int].with_error(error1) != ErrorOr[int].with_errors(
-            [error1, error2]
-        )
+        assert ErrorOr[int].with_error(error1) != ErrorOr[int].with_errors([error1, error2])

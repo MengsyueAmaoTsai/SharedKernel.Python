@@ -1,7 +1,7 @@
 import pytest
 
-from src import Error
-from src.monads import Result
+from src.shared_kernel import Error
+from src.shared_kernel.monads import Result
 
 
 class ResultTests:
@@ -10,9 +10,7 @@ class ResultTests:
 
         assert result.is_success is True
         assert result.is_failure is False
-        with pytest.raises(
-            RuntimeError, match="Can not access error on a successful result."
-        ):
+        with pytest.raises(RuntimeError, match="Can not access error on a successful result."):
             result.error
 
     def test_failure_when_given_null_error_should_raise_value_error(self) -> None:

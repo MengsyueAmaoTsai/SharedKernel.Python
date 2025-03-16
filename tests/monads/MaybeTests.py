@@ -1,6 +1,6 @@
 import pytest
 
-from src.monads import Maybe
+from src.shared_kernel.monads import Maybe
 
 
 class MaybeTests:

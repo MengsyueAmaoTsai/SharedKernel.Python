@@ -1,4 +1,4 @@
-from src import SingleValueObject
+from src.shared_kernel import SingleValueObject
 
 
 class TestSingleValueObject(SingleValueObject[str]):
