@@ -1,6 +1,6 @@
 from typing import Iterable
 
-from src import ValueObject
+from src.shared_kernel import ValueObject
 
 
 class TestValueObject(ValueObject):

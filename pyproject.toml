@@ -1,12 +1,9 @@
 [project]
 name = "richillcapital-shared-kernel"
 version = "1.0.0"
-description = "Shared kernel for python projects"
+description = "Shared kernel"
 authors = [
     { name = "Mengsyue Amao Tsai", email = "mengsyue.tsai@outlook.com" }
-]
-dependencies = [
-    "pytest>=8.3.4",
 ]
 readme = "README.md"
 requires-python = ">= 3.12"
@@ -20,6 +17,7 @@ build-backend = "hatchling.build"
 managed = true
 dev-dependencies = [
     "ruff>=0.9.6",
+    "pytest>=8.3.5",
 ]
 
 [tool.hatch.metadata]

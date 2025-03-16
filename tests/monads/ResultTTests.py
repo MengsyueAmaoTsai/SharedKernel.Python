@@ -1,7 +1,7 @@
 import pytest
 
-from src import Error
-from src.monads import ResultT
+from src.shared_kernel import Error
+from src.shared_kernel.monads import ResultT
 
 
 class ResultTTests:
