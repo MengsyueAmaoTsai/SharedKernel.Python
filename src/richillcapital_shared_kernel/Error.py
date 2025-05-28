@@ -18,6 +18,7 @@ class ErrorType(Enum):
     UnsupportedMediaType = "UnsupportedMediaType"
     Unexpected = "Unexpected"
     Unavailable = "Unavailable"
+    Timeout = "Timeout"
 
 
 @dataclass(frozen=True)
@@ -86,9 +87,7 @@ class Error:
     @classmethod
     def invalid(cls, code_or_message: str, message: str = "") -> "Error":  # type: ignore
         if not message:
-            return cls.create(
-                ErrorType.Validation, ErrorType.Validation.value, code_or_message
-            )
+            return cls.create(ErrorType.Validation, ErrorType.Validation.value, code_or_message)
         return cls.create(ErrorType.Validation, code_or_message, message)
 
     @overload
@@ -120,9 +119,7 @@ class Error:
     @classmethod
     def unauthorized(cls, code_or_message: str, message: str = "") -> "Error":  # type: ignore
         if not message:
-            return cls.create(
-                ErrorType.Unauthorized, ErrorType.Unauthorized.value, code_or_message
-            )
+            return cls.create(ErrorType.Unauthorized, ErrorType.Unauthorized.value, code_or_message)
         return cls.create(ErrorType.Unauthorized, code_or_message, message)
 
     @overload
@@ -155,9 +152,7 @@ class Error:
     @classmethod
     def access_denied(cls, code_or_message: str, message: str = "") -> "Error":  # type: ignore
         if not message:
-            return cls.create(
-                ErrorType.AccessDenied, ErrorType.AccessDenied.value, code_or_message
-            )
+            return cls.create(ErrorType.AccessDenied, ErrorType.AccessDenied.value, code_or_message)
         return cls.create(ErrorType.AccessDenied, code_or_message, message)
 
     @overload
@@ -190,9 +185,7 @@ class Error:
     @classmethod
     def not_found(cls, code_or_message: str, message: str = "") -> "Error":  # type: ignore
         if not message:
-            return cls.create(
-                ErrorType.NotFound, ErrorType.NotFound.value, code_or_message
-            )
+            return cls.create(ErrorType.NotFound, ErrorType.NotFound.value, code_or_message)
         return cls.create(ErrorType.NotFound, code_or_message, message)
 
     @overload
@@ -262,9 +255,7 @@ class Error:
     @classmethod
     def conflict(cls, code_or_message: str, message: str = "") -> "Error":  # type: ignore
         if not message:
-            return cls.create(
-                ErrorType.Conflict, ErrorType.Conflict.value, code_or_message
-            )
+            return cls.create(ErrorType.Conflict, ErrorType.Conflict.value, code_or_message)
         return cls.create(ErrorType.Conflict, code_or_message, message)
 
     @overload
@@ -334,9 +325,7 @@ class Error:
     @classmethod
     def unexpected(cls, code_or_message: str, message: str = "") -> "Error":  # type: ignore
         if not message:
-            return cls.create(
-                ErrorType.Unexpected, ErrorType.Unexpected.value, code_or_message
-            )
+            return cls.create(ErrorType.Unexpected, ErrorType.Unexpected.value, code_or_message)
         return cls.create(ErrorType.Unexpected, code_or_message, message)
 
     @overload
@@ -369,10 +358,41 @@ class Error:
     @classmethod
     def unavailable(cls, code_or_message: str, message: str = "") -> "Error":  # type: ignore
         if not message:
-            return cls.create(
-                ErrorType.Unavailable, ErrorType.Unavailable.value, code_or_message
-            )
+            return cls.create(ErrorType.Unavailable, ErrorType.Unavailable.value, code_or_message)
         return cls.create(ErrorType.Unavailable, code_or_message, message)
+
+    @overload
+    @classmethod
+    def timeout(cls, code: str, message: str) -> "Error":
+        """
+        Creates a new timeout error with the specified code and message.
+
+        Args:
+            code (str): The error code.
+            message (str): The error message.
+
+        Returns:
+            Error: An instance of Error.
+        """
+
+    @overload
+    @classmethod
+    def timeout(cls, message: str) -> "Error":
+        """
+        Creates a new timeout error with the specified message.
+
+        Args:
+            message (str): The error message.
+
+        Returns:
+            Error: An instance of Error.
+        """
+
+    @classmethod
+    def timeout(cls, code_or_message: str, message: str = "") -> "Error":  # type: ignore
+        if not message:
+            return cls.create(ErrorType.Timeout, ErrorType.Timeout.value, code_or_message)
+        return cls.create(ErrorType.Timeout, code_or_message, message)
 
 
 Error.Null = Error(type=ErrorType.Null, code=ErrorType.Null.name, message="")

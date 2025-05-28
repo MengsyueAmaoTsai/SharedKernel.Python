@@ -1,7 +1,7 @@
 import pytest
 
-from src.shared_kernel import Error
-from src.shared_kernel.monads import ErrorOr
+from src.richillcapital_shared_kernel import Error
+from src.richillcapital_shared_kernel.monads import ErrorOr
 
 
 class ErrorOrTests:

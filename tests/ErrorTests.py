@@ -1,6 +1,8 @@
+from typing import Callable
+
 import pytest
 
-from src.shared_kernel import Error, ErrorType
+from src.richillcapital_shared_kernel import Error, ErrorType
 
 
 class ErrorTests:
@@ -24,6 +26,7 @@ class ErrorTests:
             ErrorType.UnsupportedMediaType,
             ErrorType.Unexpected,
             ErrorType.Unavailable,
+            ErrorType.Timeout,
         ],
     )
     def test_create_should_create_error(self, error_type: ErrorType):
@@ -48,9 +51,12 @@ class ErrorTests:
             (Error.unsupported_media_type, ErrorType.UnsupportedMediaType),
             (Error.unexpected, ErrorType.Unexpected),
             (Error.unavailable, ErrorType.Unavailable),
+            (Error.timeout, ErrorType.Timeout),
         ],
     )
-    def test_factory_methods_should_create_correct_error(self, factory_method, error_type):
+    def test_factory_methods_should_create_correct_error(
+        self, factory_method: Callable[..., Error], error_type: ErrorType
+    ):
         custom_code = "Error.Code"
         error_message = "Error message"
         error1 = factory_method(custom_code, error_message)
@@ -61,7 +67,7 @@ class ErrorTests:
         assert error1.message == error_message
 
         assert error2.type == error_type
-        assert error2.code == error_type.value  # 預設錯誤碼為錯誤類型名稱
+        assert error2.code == error_type.value
         assert error2.message == error_message
 
     def test_null_should_return_null_error(self):
