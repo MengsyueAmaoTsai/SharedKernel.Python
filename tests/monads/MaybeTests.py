@@ -1,11 +1,11 @@
 import pytest
 
-from src.richillcapital_shared_kernel.monads import Maybe
+from richillcapital_shared_kernel.monads import Maybe
 
 
 class MaybeTests:
     def test_with_value_given_none_should_return_null_maybe(self) -> None:
-        maybe = Maybe[str].with_value(None)
+        maybe = Maybe[str].with_value(None)  # type: ignore
 
         assert not maybe.has_value
         assert maybe.is_null is True
