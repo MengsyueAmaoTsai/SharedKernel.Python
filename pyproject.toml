@@ -23,7 +23,7 @@ dev-dependencies = [
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src"]
+packages = ["src/richillcapital_shared_kernel"]
 
 [tool.rye.scripts]
 build = "rye build --sdist --wheel -a --clean -v"

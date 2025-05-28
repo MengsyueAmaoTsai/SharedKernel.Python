@@ -1,4 +1,4 @@
-from src.shared_kernel import SingleValueObject
+from src.richillcapital_shared_kernel import SingleValueObject
 
 
 class TestSingleValueObject(SingleValueObject[str]):

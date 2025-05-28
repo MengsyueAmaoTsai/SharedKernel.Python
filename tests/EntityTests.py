@@ -1,4 +1,4 @@
-from src.shared_kernel import DomainEvent, Entity, SingleValueObject
+from src.richillcapital_shared_kernel import DomainEvent, Entity, SingleValueObject
 
 
 class TestEntityId(SingleValueObject[str]):
