@@ -24,6 +24,7 @@ class ErrorTests:
             ErrorType.UnsupportedMediaType,
             ErrorType.Unexpected,
             ErrorType.Unavailable,
+            ErrorType.Timeout,
         ],
     )
     def test_create_should_create_error(self, error_type: ErrorType):
@@ -48,6 +49,7 @@ class ErrorTests:
             (Error.unsupported_media_type, ErrorType.UnsupportedMediaType),
             (Error.unexpected, ErrorType.Unexpected),
             (Error.unavailable, ErrorType.Unavailable),
+            (Error.timeout, ErrorType.Timeout),
         ],
     )
     def test_factory_methods_should_create_correct_error(self, factory_method, error_type):
