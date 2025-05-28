@@ -2,7 +2,7 @@ from typing import Callable
 
 import pytest
 
-from src.richillcapital_shared_kernel import Error, ErrorType
+from richillcapital_shared_kernel import Error, ErrorType
 
 
 class ErrorTests:
