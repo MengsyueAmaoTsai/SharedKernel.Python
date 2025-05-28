@@ -1,6 +1,6 @@
 from typing import Iterable
 
-from src.richillcapital_shared_kernel import ValueObject
+from richillcapital_shared_kernel import ValueObject
 
 
 class TestValueObject(ValueObject):
