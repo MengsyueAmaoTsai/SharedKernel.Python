@@ -43,7 +43,21 @@ stages:
               targetType: inline
               script: |
                 rye test          
-
+                
+  - stage: PublishStage
+    displayName: Publish
+    dependsOn: TestStage
+    jobs:
+      - job: PublishJob
+        displayName:  Publish Artifacts
+        steps:
+          - task: PowerShell@2
+            displayName: Generate Version
+            inputs:
+              targetType: inline
+              script: |
+                $version = & $(Build.SourcesDirectory)/scripts/GenerateBuildVersion.ps1 -Revision $(Build.BuildId)
+                Write-Host "##vso[task.setvariable variable=BuildVersion]$version"
 # stages:
 #       - job: PublishJob
 #         displayName: Publish
