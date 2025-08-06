@@ -15,7 +15,8 @@ resources:
 
 variables:
   buildConfiguration: Release 
-  
+  projectPath: $(Build.SourcesDirectory)/pyproject.toml
+
 stages:
   - stage: BuildStage
     displayName: Build
@@ -66,9 +67,9 @@ stages:
             inputs:
               targetType: inline
               script: |
-                $pyproject = Get-Content -Path ./pyproject.toml
+                $pyproject = Get-Content -Path $(projectPath)
                 $pyproject = $pyproject -replace 'version = ".*"', "version = ""$(BuildVersion)"""
-                $pyproject | Set-Content -Path ./pyproject.toml
+                $pyproject | Set-Content -Path $(projectPath)
                   
           - task: PowerShell@2
             displayName: Publish Artifacts
