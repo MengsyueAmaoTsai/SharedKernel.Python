@@ -16,7 +16,7 @@ resources:
 variables:
   buildConfiguration: Release 
   projectPath: $(Build.SourcesDirectory)/pyproject.toml
-  artifactPath: $(Build.ArtifactStagingDirectory)/artifacts
+  artifactsPath: $(Build.ArtifactStagingDirectory)/artifacts
 
 stages:
   - stage: BuildStage
@@ -77,12 +77,12 @@ stages:
             inputs:
               targetType: inline
               script: |
-                rye run build -o $(artifactPath)
+                rye run build -o $(artifactsPath)
 
           - task: PublishPipelineArtifact@1
             displayName: Publish RichillCapital.SharedKernel Artifacts
             inputs:
-              targetPath: $(artifactPath)
+              targetPath: $(artifactsPath)
               artifact: RichillCapital.SharedKernel-$(buildConfiguration)-$(BuildVersion)
               publishLocation: pipeline                
 
