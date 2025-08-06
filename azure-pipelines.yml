@@ -13,7 +13,9 @@ pool:
 resources:
   - repo: self
 
-
+variables:
+  buildConfiguration: Release 
+  
 stages:
   - stage: BuildStage
     displayName: Build
@@ -43,7 +45,7 @@ stages:
               targetType: inline
               script: |
                 rye test          
-                
+
   - stage: PublishStage
     displayName: Publish
     dependsOn: TestStage
@@ -58,47 +60,29 @@ stages:
               script: |
                 $version = & $(Build.SourcesDirectory)/scripts/GenerateBuildVersion.ps1 -Revision $(Build.BuildId)
                 Write-Host "##vso[task.setvariable variable=BuildVersion]$version"
-# stages:
-#       - job: PublishJob
-#         displayName: Publish
-#         dependsOn: BuildJob
-#         condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
 
-#         steps:
-#           - task: PowerShell@2
-#             displayName: Generate build version
-#             inputs:
-#               targetType: inline
-#               script: |
-#                 Write-Host "Generating build version..."
+          - task: PowerShell@2
+            displayName: Update Version
+            inputs:
+              targetType: inline
+              script: |
+                $pyproject = Get-Content -Path ./pyproject.toml
+                $pyproject = $pyproject -replace 'version = ".*"', "version = ""$(BuildVersion)"""
+                $pyproject | Set-Content -Path ./pyproject.toml
+                  
+          - task: PowerShell@2
+            displayName: Publish Artifacts
+            inputs:
+              targetType: inline
+              script: |
+                rye run build -o $(Build.ArtifactStagingDirectory)/artifacts
 
-#                 $buildVersion = (Get-Date).ToString("yy.MMdd") + ".$(Build.BuildId)"
-#                 Write-Host "##vso[task.setvariable variable=BuildVersion]$buildVersion"
-
-#                 Write-Host "Generated Build Version: $buildVersion"
-
-#           - task: PowerShell@2
-#             displayName: Update pyproject.toml version
-#             inputs:
-#               targetType: inline
-#               script: |
-#                 Write-Host "Updating assembly version to $(BuildVersion)"
-
-#                 $pyproject = Get-Content -Path "pyproject.toml"
-#                 $pyproject = $pyproject -replace 'version = ".*"', "version = ""$(BuildVersion)"""
-#                 $pyproject | Set-Content -Path "pyproject.toml"
-
-#                 Write-Host "Updated assembly version to $(BuildVersion)"
-
-#           - script: rye run build -o $(Build.ArtifactStagingDirectory)/artifacts 
-#             displayName: Publish build artifacts
-
-#           - task: PublishPipelineArtifact@1
-#             displayName: Publish pipeline artifact
-#             inputs:
-#               targetPath: '$(Build.ArtifactStagingDirectory)/artifacts'
-#               artifact: 'RichillCapital.SharedKernel-Debug-$(BuildVersion)'
-#               publishLocation: 'pipeline'
+          - task: PublishPipelineArtifact@1
+            displayName: Publish RichillCapital.SharedKernel Artifacts
+            inputs:
+              targetPath: $(Build.ArtifactStagingDirectory)/artifacts
+              artifact: RichillCapital.SharedKernel-$(buildConfiguration)-$(BuildVersion)
+              publishLocation: pipeline                
 
 #   - stage: ReleaseStage
 #     displayName: Release

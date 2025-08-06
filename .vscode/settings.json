@@ -1,4 +1,4 @@
 {
   "python.analysis.typeCheckingMode": "strict",
-  "cSpell.words": ["hashability"]
+  "cSpell.words": ["hashability", "pyproject", "setvariable"]
 }
