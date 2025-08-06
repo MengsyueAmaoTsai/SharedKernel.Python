@@ -29,28 +29,22 @@ stages:
                 rye sync 
                 rye run lint 
                 rye run build
-              
+      
+  - stage: TestStage 
+    displayName: Test 
+    dependsOn: BuildStage
+    jobs:
+      - job: UnitTestsJob
+        displayName: Run Unit Tests 
+        steps:
+          - task: PowerShell@2
+            displayName: Run Unit Tests
+            inputs:
+              targetType: inline
+              script: |
+                rye test          
 
 # stages:
-#   - stage: BuildStage
-#     displayName: Build
-#     jobs:
-#       - job: BuildJob
-#         displayName: Build
-
-#         steps:
-#           - script: rye sync
-#             displayName: Sync dependencies
-          
-#           - script: rye run lint
-#             displayName: Lint
-
-#           - script: rye run build
-#             displayName: Build
-
-#           - script: rye test
-#             displayName: Test
-
 #       - job: PublishJob
 #         displayName: Publish
 #         dependsOn: BuildJob
