@@ -68,7 +68,7 @@ stages:
             inputs:
               targetType: filePath
               filePath: $(Build.SourcesDirectory)/scripts/UpdateVersion.ps1
-              arguments: -ProjectPath $(packageJsonPath) -Version $(BuildVersion)   
+              arguments: -ProjectPath $(projectPath) -Version $(BuildVersion)   
                   
           - task: PowerShell@2
             displayName: Publish Artifacts
