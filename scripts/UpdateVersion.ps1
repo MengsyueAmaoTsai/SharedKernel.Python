@@ -10,7 +10,7 @@ param (
 )
 
 $pyproject = Get-Content -Path $ProjectPath 
-$pyproject = $pyproject -replace 'version = ".*"', "version = ""$(Version)"""
+$pyproject = $pyproject -replace 'version = ".*"', "version = ""$Version"""
 $pyproject | Set-Content -Path $ProjectPath
 
 Write-Host "Updated version to: $Version" -ForegroundColor Green
