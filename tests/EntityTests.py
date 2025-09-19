@@ -1,4 +1,4 @@
-from richillcapital_shared_kernel import DomainEvent, Entity, SingleValueObject
+from richillcapital_shared_kernel import Entity, IDomainEvent, SingleValueObject
 
 
 class TestEntityId(SingleValueObject[str]):
@@ -16,7 +16,7 @@ class TestEntity(Entity[TestEntityId]):
         return self.__name
 
 
-class TestDomainEvent(DomainEvent):
+class TestDomainEvent(IDomainEvent):
     pass
 
 
